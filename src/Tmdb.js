@@ -62,11 +62,41 @@ const getHomeList = async () => {
   ]
 }
 
+ const getMovieInfo =  async(movieId, type ) => {
+  let info = {}
+
+  if(movieId) {
+    
+    switch(type) {
+      case 'movie':
+        info = await basicFetch(
+          `/movie/${movieId}?language=pt-BR&api_key=${KEY}`
+        );
+      break;
+
+      case 'tv':
+        info = await basicFetch(
+          `/tv/${movieId}?language=pt-BR&api_key=${KEY}`
+        );
+      break;
+
+      default:
+        info = null
+      break
+
+    }
+  }
+return info
+  
+}
+
+
+
 const basicFetch = async (endpoint) => {
   const req = await fetch(`${API_BASE}${endpoint}`)
   const json = await req.json()
 
   return json
 }
-export default getHomeList
+export {getHomeList, getMovieInfo}
 
